@@ -173,7 +173,7 @@ public class TaskManagerApp extends Application {
         ComboBox<String> category = new ComboBox<>(FXCollections.observableArrayList("Work", "Personal")); category.setValue(existing == null ? "Work" : existing.getCategory());
         ComboBox<String> priority = new ComboBox<>(FXCollections.observableArrayList("Low", "Medium", "High")); priority.setValue(existing == null ? "Medium" : existing.getPriority());
         DatePicker due = new DatePicker(existing == null ? LocalDate.now() : existing.getDueDate()); due.setPromptText("No due date");
-        GridPane grid = new GridPane(); grid.setHgap(12); grid.setVgap(12); grid.setPadding(new Insets(10, 0, 0, 0));
+        GridPane grid = new GridPane(); grid.getStyleClass().add("task-form"); grid.setHgap(14); grid.setVgap(14); grid.setPadding(new Insets(12, 2, 4, 2));
         grid.add(new Label("Task name"), 0, 0); grid.add(title, 1, 0);
         grid.add(new Label("Details"), 0, 1); grid.add(description, 1, 1);
         grid.add(new Label("List"), 0, 2); grid.add(category, 1, 2);
