@@ -1,0 +1,66 @@
+* { -fx-font-family: "Inter", "Aptos", "Segoe UI", sans-serif; }
+.root { -fx-background-color: #f7f8fa; -fx-font-size: 13px; }
+.app-shell { -fx-background-color: #f7f8fa; }
+.sidebar { -fx-background-color: #fff; -fx-border-color: transparent #eceef2 transparent transparent; -fx-border-width: 0 1px 0 0; -fx-padding: 25px 14px 18px; }
+.brand { -fx-alignment: center-left; -fx-padding: 2px 8px 36px; }
+.brand > .label:last-child { -fx-font-size: 19px; -fx-font-weight: 750; -fx-text-fill: #192326; -fx-letter-spacing: -0.5px; }
+.brand-mark { -fx-background-color: #dff1e9; -fx-background-radius: 10px; -fx-text-fill: #2b8766; -fx-font-size: 16px; -fx-font-weight: bold; -fx-min-width: 31px; -fx-min-height: 31px; -fx-alignment: center; }
+.section-caption { -fx-text-fill: #a0a8ad; -fx-font-size: 10px; -fx-font-weight: 700; -fx-letter-spacing: 1.1px; -fx-padding: 0 0 10px 10px; }
+.nav-button { -fx-background-color: transparent; -fx-background-radius: 8px; -fx-text-fill: #697477; -fx-font-size: 13px; -fx-padding: 11px 12px; -fx-cursor: hand; -fx-font-weight: 500; }
+.nav-button:hover { -fx-background-color: #f5f7f6; -fx-text-fill: #273431; }
+.nav-active { -fx-background-color: #eaf5ef; -fx-text-fill: #277652; -fx-font-weight: 650; }
+.category-nav { -fx-font-size: 12px; }
+.dot-work { -fx-text-fill: #648ad2; }
+.dot-personal { -fx-text-fill: #d69c58; }
+.sidebar-footer { -fx-background-color: #f7f9f8; -fx-background-radius: 10px; -fx-padding: 14px 12px; }
+.sidebar-footer .label:first-child { -fx-font-size: 9px; -fx-font-weight: bold; -fx-text-fill: #abb3b2; -fx-letter-spacing: 1px; }
+.sidebar-footer .label:last-child { -fx-font-size: 11px; -fx-text-fill: #7d8986; -fx-padding: 5px 0 0; }
+.main-content { -fx-padding: 0 56px 35px; -fx-spacing: 0; }
+.topbar { -fx-padding: 24px 0 31px; -fx-spacing: 15px; }
+.top-date { -fx-text-fill: #899391; -fx-font-size: 12px; }
+.avatar { -fx-background-color: #dbece4; -fx-background-radius: 50%; -fx-text-fill: #367355; -fx-font-weight: bold; -fx-alignment: center; -fx-min-width: 34px; -fx-min-height: 34px; }
+.eyebrow { -fx-text-fill: #438b6c; -fx-font-size: 10px; -fx-font-weight: 700; -fx-letter-spacing: 1.35px; }
+.page-title { -fx-text-fill: #192421; -fx-font-size: 35px; -fx-font-weight: 700; -fx-letter-spacing: -1.25px; -fx-line-spacing: -2px; }
+.page-subtitle { -fx-text-fill: #89938f; -fx-font-size: 13px; -fx-padding: 0 0 4px; }
+.toolbar { -fx-padding: 23px 0 25px; }
+.search-field { -fx-background-color: #fff; -fx-background-radius: 8px; -fx-border-color: #e7ebea; -fx-border-radius: 8px; -fx-padding: 10px 13px; -fx-prompt-text-fill: #aab2b0; -fx-text-fill: #36413d; -fx-pref-width: 285px; }
+.search-field:focused { -fx-border-color: #98c8ae; -fx-effect: dropshadow(gaussian, rgba(50,130,88,0.08), 8, 0, 0, 1); }
+.primary-button { -fx-background-color: #38865e; -fx-background-radius: 8px; -fx-text-fill: white; -fx-padding: 11px 17px; -fx-font-weight: 650; -fx-cursor: hand; }
+.primary-button:hover { -fx-background-color: #2d754f; }
+.list-heading { -fx-padding: 3px 0 13px; -fx-spacing: 9px; }
+.list-title { -fx-text-fill: #28332f; -fx-font-size: 16px; -fx-font-weight: 700; }
+.task-count { -fx-background-color: #edf0ee; -fx-background-radius: 10px; -fx-text-fill: #808b86; -fx-font-size: 10px; -fx-padding: 4px 8px; }
+.list-heading > .label:nth-last-child(2) { -fx-text-fill: #a0a8a4; -fx-font-size: 11px; }
+.sort-box { -fx-background-color: transparent; -fx-border-color: transparent; -fx-font-size: 11px; -fx-text-fill: #64716c; }
+.sort-box .list-cell { -fx-text-fill: #64716c; }
+.task-list { -fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-border-color: transparent; -fx-padding: 0; }
+.task-list .list-cell { -fx-background-color: transparent; -fx-padding: 0 0 10px; }
+.task-list .list-cell:filled:hover, .task-list .list-cell:filled:selected { -fx-background-color: transparent; }
+.task-card { -fx-background-color: white; -fx-background-radius: 10px; -fx-border-color: #ecefed; -fx-border-radius: 10px; -fx-padding: 16px 15px; -fx-min-height: 93px; }
+.task-card:hover { -fx-border-color: #d7e5dc; -fx-effect: dropshadow(gaussian, rgba(37,65,49,0.045), 10, 0, 0, 3); }
+.task-check { -fx-padding: 0 3px; }
+.task-check .box { -fx-background-color: white; -fx-border-color: #cbd4cf; -fx-border-radius: 50%; -fx-background-radius: 50%; -fx-min-width: 17px; -fx-min-height: 17px; }
+.task-check:selected .box { -fx-background-color: #438b65; -fx-border-color: #438b65; }
+.task-check:selected .mark { -fx-background-color: white; }
+.task-name { -fx-text-fill: #2b3531; -fx-font-size: 13px; -fx-font-weight: 650; }
+.task-done { -fx-text-fill: #9da6a1; -fx-strikethrough: true; }
+.task-description { -fx-text-fill: #99a19d; -fx-font-size: 11px; }
+.category-pill, .priority-pill { -fx-background-radius: 9px; -fx-padding: 4px 7px; -fx-font-size: 9px; -fx-font-weight: 600; }
+.work-pill { -fx-background-color: #eef3fc; -fx-text-fill: #6683ba; }
+.personal-pill { -fx-background-color: #fbf3e8; -fx-text-fill: #b7894b; }
+.priority-high { -fx-text-fill: #c9746a; -fx-background-color: #fbefed; }
+.priority-medium { -fx-text-fill: #bc914f; -fx-background-color: #fbf5e9; }
+.priority-low { -fx-text-fill: #6e9a7e; -fx-background-color: #eef6f0; }
+.due-box { -fx-min-width: 65px; -fx-padding: 0 4px; }
+.due-date { -fx-text-fill: #5d6862; -fx-font-size: 11px; -fx-font-weight: 600; }
+.due-hint { -fx-text-fill: #aab2ad; -fx-font-size: 8px; -fx-font-weight: 700; -fx-letter-spacing: .7px; }
+.due-hint.overdue { -fx-text-fill: #c8786e; }
+.more-button { -fx-background-color: transparent; -fx-text-fill: #aab3ae; -fx-font-size: 17px; -fx-cursor: hand; -fx-padding: 3px 5px; }
+.more-button:hover { -fx-background-color: #f4f6f5; -fx-background-radius: 5px; -fx-text-fill: #58645e; }
+.task-dialog { -fx-background-color: white; }
+.task-dialog .header-panel { -fx-background-color: #f7faf8; }
+.task-dialog .header-panel .label { -fx-text-fill: #25322d; -fx-font-size: 16px; -fx-font-weight: 650; }
+.task-dialog .label { -fx-text-fill: #68746f; -fx-font-size: 12px; }
+.task-dialog .text-field, .task-dialog .text-area, .task-dialog .combo-box, .task-dialog .date-picker { -fx-background-radius: 6px; -fx-border-radius: 6px; -fx-border-color: #e4e9e6; -fx-background-color: white; }
+.task-dialog .button { -fx-background-radius: 6px; -fx-padding: 8px 13px; -fx-cursor: hand; }
+.task-dialog .button:default { -fx-background-color: #38865e; -fx-text-fill: white; }
