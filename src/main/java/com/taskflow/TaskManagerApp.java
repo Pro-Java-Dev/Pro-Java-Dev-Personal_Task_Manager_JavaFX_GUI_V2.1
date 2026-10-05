@@ -33,11 +33,11 @@ public class TaskManagerApp extends Application {
         shell.getStyleClass().add("app-shell");
         shell.setLeft(buildSidebar());
         shell.setCenter(buildMainContent());
-        Scene scene = new Scene(shell, 1180, 760);
+        Scene scene = new Scene(shell, 1240, 800);
         scene.getStylesheets().add(getClass().getResource("/com/taskflow/theme.css").toExternalForm());
         stage.setTitle("Taskflow — your day, in focus");
-        stage.setMinWidth(900);
-        stage.setMinHeight(640);
+        stage.setMinWidth(980);
+        stage.setMinHeight(680);
         stage.setScene(scene);
         stage.show();
         refresh();
@@ -46,7 +46,7 @@ public class TaskManagerApp extends Application {
     private VBox buildSidebar() {
         VBox sidebar = new VBox(0);
         sidebar.getStyleClass().add("sidebar");
-        sidebar.setPrefWidth(242);
+        sidebar.setPrefWidth(250);
         HBox brand = new HBox(11, new Label("✦"), new Label("taskflow"));
         brand.getStyleClass().add("brand");
         brand.getChildren().get(0).getStyleClass().add("brand-mark");
