@@ -223,7 +223,7 @@ public class TaskManagerApp extends Application {
             case "Today" -> !task.isCompleted() && task.getDueDate() != null && task.getDueDate().equals(LocalDate.now());
             case "Upcoming" -> !task.isCompleted() && task.getDueDate() != null && task.getDueDate().isAfter(LocalDate.now());
             case "Completed" -> task.isCompleted();
-            default -> true;
+            default -> !task.isCompleted();
         };
     }
 
