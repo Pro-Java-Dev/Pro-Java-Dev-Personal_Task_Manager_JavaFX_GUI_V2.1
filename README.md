@@ -2,6 +2,8 @@
 
 Taskflow is a desktop task manager built with Java 17, JavaFX, and Maven. It provides a focused graphical workspace for capturing tasks, organizing them into lists, and keeping track of due dates and priorities.
 
+The interface uses a dark evergreen navigation sidebar and a spacious, light workspace with refined task cards and controls. The window opens at 1240 × 800 pixels and can be resized.
+
 ## Features
 
 - Create, edit, and delete tasks.
