@@ -24,6 +24,15 @@ public class TaskManagerApp extends Application {
     private final Label countLabel = new Label();
     private final Label greetingDate = new Label();
     private final ComboBox<String> sortBox = new ComboBox<>(FXCollections.observableArrayList("Due date", "Priority", "Newest"));
+    private VBox sidebar;
+    private HBox sidebarBrand;
+    private Label sidebarBrandName;
+    private Region sidebarBrandSpacer;
+    private Button brandToggle;
+    private VBox sidebarProfile;
+    private Label profileTitle;
+    private Label profileCopy;
+    private boolean sidebarCollapsed;
     private String currentFilter = "All tasks";
     private String currentCategory = "All";
 
@@ -44,13 +53,20 @@ public class TaskManagerApp extends Application {
     }
 
     private VBox buildSidebar() {
-        VBox sidebar = new VBox(0);
+        sidebar = new VBox(0);
         sidebar.getStyleClass().add("sidebar");
         sidebar.setPrefWidth(250);
-        HBox brand = new HBox(11, new Label("✦"), new Label("taskflow"));
-        brand.getStyleClass().add("brand");
-        brand.getChildren().get(0).getStyleClass().add("brand-mark");
-        sidebar.getChildren().add(brand);
+        brandToggle = new Button("✦");
+        brandToggle.getStyleClass().add("brand-mark");
+        brandToggle.setTooltip(new Tooltip("Collapse menu"));
+        brandToggle.setOnAction(e -> setSidebarCollapsed(!sidebarCollapsed));
+        sidebarBrandName = new Label("taskflow");
+        sidebarBrandSpacer = new Region(); HBox.setHgrow(sidebarBrandSpacer, Priority.ALWAYS);
+        sidebarBrand = new HBox(11, brandToggle, sidebarBrandName, sidebarBrandSpacer);
+        sidebarBrand.getStyleClass().add("brand");
+        sidebarBrand.setMaxWidth(Double.MAX_VALUE);
+        sidebarBrandName.getStyleClass().add("brand-name");
+        sidebar.getChildren().add(sidebarBrand);
 
         Label workspace = new Label("WORKSPACE"); workspace.getStyleClass().add("section-caption");
         sidebar.getChildren().add(workspace);
@@ -66,14 +82,17 @@ public class TaskManagerApp extends Application {
         sidebar.getChildren().add(categoryButton("●", "Personal", "dot-personal"));
 
         Region spacer = new Region(); VBox.setVgrow(spacer, Priority.ALWAYS); sidebar.getChildren().add(spacer);
-        VBox profile = new VBox(3, new Label("YOUR SPACE"), new Label("A little more clarity, every day."));
-        profile.getStyleClass().add("sidebar-footer"); sidebar.getChildren().add(profile);
+        profileTitle = new Label("YOUR SPACE"); profileTitle.getStyleClass().add("sidebar-footer-title");
+        profileCopy = new Label("A little more clarity, every day."); profileCopy.getStyleClass().add("sidebar-footer-copy");
+        sidebarProfile = new VBox(3, profileTitle, profileCopy);
+        sidebarProfile.getStyleClass().add("sidebar-footer"); sidebar.getChildren().add(sidebarProfile);
         return sidebar;
     }
 
     private Button navButton(String icon, String text, String filter) {
-        Button button = new Button(icon + "    " + text);
+        Button button = new Button();
         button.getStyleClass().add("nav-button");
+        configureNavButton(button, icon, text, null);
         button.setMaxWidth(Double.MAX_VALUE);
         button.setAlignment(Pos.CENTER_LEFT);
         button.setOnAction(e -> { currentFilter = filter; currentCategory = "All"; refresh(); updateActiveNav(); });
@@ -82,12 +101,52 @@ public class TaskManagerApp extends Application {
     }
 
     private Button categoryButton(String icon, String text, String dotClass) {
-        Button button = new Button(icon + "    " + text);
-        button.getStyleClass().addAll("nav-button", "category-nav", dotClass);
+        Button button = new Button();
+        button.getStyleClass().addAll("nav-button", "category-nav");
+        configureNavButton(button, icon, text, dotClass);
         button.setMaxWidth(Double.MAX_VALUE); button.setAlignment(Pos.CENTER_LEFT);
         button.setUserData("category:" + text);
         button.setOnAction(e -> { currentCategory = text; currentFilter = "All tasks"; refresh(); updateActiveNav(); });
         return button;
+    }
+
+    private void configureNavButton(Button button, String icon, String text, String iconStyle) {
+        Label glyph = new Label(icon); glyph.getStyleClass().add("nav-icon");
+        if (iconStyle != null) glyph.getStyleClass().add(iconStyle);
+        Label caption = new Label(text); caption.getStyleClass().add("nav-label");
+        HBox graphic = new HBox(12, glyph, caption); graphic.getStyleClass().add("nav-content");
+        graphic.setAlignment(Pos.CENTER_LEFT);
+        button.setGraphic(graphic);
+        button.setTooltip(new Tooltip(text));
+        button.getProperties().put("nav-label", caption);
+    }
+
+    private void setSidebarCollapsed(boolean collapsed) {
+        sidebarCollapsed = collapsed;
+        sidebar.setPrefWidth(collapsed ? 88 : 250);
+        sidebar.setMinWidth(collapsed ? 88 : 250);
+        sidebar.setMaxWidth(collapsed ? 88 : 250);
+        if (collapsed) sidebar.getStyleClass().add("sidebar-collapsed");
+        else sidebar.getStyleClass().remove("sidebar-collapsed");
+
+        sidebarBrand.setAlignment(collapsed ? Pos.CENTER : Pos.CENTER_LEFT);
+        sidebarBrandName.setVisible(!collapsed); sidebarBrandName.setManaged(!collapsed);
+        sidebarBrandSpacer.setVisible(!collapsed); sidebarBrandSpacer.setManaged(!collapsed);
+        brandToggle.setTooltip(new Tooltip(collapsed ? "Expand menu" : "Collapse menu"));
+        profileTitle.setVisible(!collapsed); profileTitle.setManaged(!collapsed);
+        profileCopy.setVisible(!collapsed); profileCopy.setManaged(!collapsed);
+        sidebarProfile.setVisible(!collapsed); sidebarProfile.setManaged(!collapsed);
+        for (var node : sidebar.getChildren()) {
+            if (node instanceof Label label && label.getStyleClass().contains("section-caption")) {
+                label.setVisible(!collapsed); label.setManaged(!collapsed);
+            } else if (node instanceof Button button) {
+                Label caption = (Label) button.getProperties().get("nav-label");
+                if (caption != null) { caption.setVisible(!collapsed); caption.setManaged(!collapsed); }
+                button.setAlignment(collapsed ? Pos.CENTER : Pos.CENTER_LEFT);
+                HBox graphic = (HBox) button.getGraphic();
+                graphic.setAlignment(collapsed ? Pos.CENTER : Pos.CENTER_LEFT);
+            }
+        }
     }
 
     private void updateActiveNav() {
@@ -117,7 +176,7 @@ public class TaskManagerApp extends Application {
         HBox actions = new HBox(12); actions.setAlignment(Pos.CENTER_LEFT); actions.getStyleClass().add("toolbar");
         searchField.setPromptText("⌕   Search tasks..."); searchField.getStyleClass().add("search-field");
         searchField.textProperty().addListener((o, old, value) -> refresh());
-        Button add = new Button("＋  New task"); add.getStyleClass().add("primary-button"); add.setOnAction(e -> editTask(null));
+        Button add = new Button("+  New task"); add.getStyleClass().add("primary-button"); add.setOnAction(e -> editTask(null));
         Region push = new Region(); HBox.setHgrow(push, Priority.ALWAYS);
         actions.getChildren().addAll(searchField, push, add);
 
@@ -129,6 +188,13 @@ public class TaskManagerApp extends Application {
         listHead.getChildren().addAll(listTitle, countLabel, headPush, new Label("Sort by"), sortBox);
 
         taskList.setCellFactory(list -> new TaskCell()); taskList.getStyleClass().add("task-list"); VBox.setVgrow(taskList, Priority.ALWAYS);
+        Label emptyIcon = new Label("✓"); emptyIcon.getStyleClass().add("empty-icon");
+        Label emptyTitle = new Label("Nothing on your list"); emptyTitle.getStyleClass().add("empty-title");
+        Label emptyMessage = new Label("A little breathing room. Add a task whenever you’re ready."); emptyMessage.getStyleClass().add("empty-message");
+        Button emptyAdd = new Button("+  Create a task"); emptyAdd.getStyleClass().add("primary-button"); emptyAdd.setOnAction(e -> editTask(null));
+        VBox emptyState = new VBox(11, emptyIcon, emptyTitle, emptyMessage, emptyAdd);
+        emptyState.getStyleClass().add("empty-state"); emptyState.setAlignment(Pos.CENTER);
+        taskList.setPlaceholder(emptyState);
         VBox.setMargin(taskList, new Insets(0, 0, 0, 0));
         main.getChildren().addAll(topbar, heading, actions, listHead, taskList);
         return main;
@@ -165,6 +231,7 @@ public class TaskManagerApp extends Application {
 
     private void editTask(Task existing) {
         Dialog<Task> dialog = new Dialog<>(); dialog.setTitle(existing == null ? "Create a task" : "Edit task");
+        dialog.initOwner(taskList.getScene().getWindow());
         dialog.setHeaderText(existing == null ? "A small step toward a clearer day." : "Make a quick update.");
         ButtonType saveType = new ButtonType(existing == null ? "Create task" : "Save changes", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
@@ -179,8 +246,14 @@ public class TaskManagerApp extends Application {
         grid.add(new Label("List"), 0, 2); grid.add(category, 1, 2);
         grid.add(new Label("Priority"), 0, 3); grid.add(priority, 1, 3);
         grid.add(new Label("Due date"), 0, 4); grid.add(due, 1, 4);
-        ColumnConstraints first = new ColumnConstraints(); first.setMinWidth(80); ColumnConstraints second = new ColumnConstraints(); second.setHgrow(Priority.ALWAYS); second.setPrefWidth(270); grid.getColumnConstraints().addAll(first, second);
+        ColumnConstraints first = new ColumnConstraints(); first.setMinWidth(80);
+        ColumnConstraints second = new ColumnConstraints(); second.setHgrow(Priority.ALWAYS); second.setFillWidth(true); second.setPrefWidth(340);
+        grid.getColumnConstraints().addAll(first, second);
+        title.setMaxWidth(Double.MAX_VALUE); description.setMaxWidth(Double.MAX_VALUE);
+        category.setMaxWidth(Double.MAX_VALUE); priority.setMaxWidth(Double.MAX_VALUE); due.setMaxWidth(Double.MAX_VALUE);
         dialog.getDialogPane().setContent(grid); dialog.getDialogPane().getStyleClass().add("task-dialog");
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/com/taskflow/theme.css").toExternalForm());
+        dialog.getDialogPane().setPrefWidth(540);
         dialog.getDialogPane().lookupButton(saveType).disableProperty().bind(title.textProperty().isEmpty());
         dialog.setResultConverter(button -> {
             if (button != saveType) return null;

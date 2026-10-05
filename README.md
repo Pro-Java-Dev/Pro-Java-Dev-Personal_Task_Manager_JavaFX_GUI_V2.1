@@ -10,9 +10,11 @@ The interface uses a dark evergreen navigation sidebar and a spacious, light wor
 - Add a task description, choose a **Work** or **Personal** list, set **Low**, **Medium**, or **High** priority, and select a due date.
 - Mark tasks as complete and view them in the **Completed** section.
 - Filter tasks by **Today**, **Upcoming**, or category.
+- Click the Taskflow mark to collapse the sidebar into an icon-only navigation rail; destination tooltips remain available.
 - Search task titles and descriptions as you type.
 - Sort the current results by due date, priority, or newest due date.
 - See due date labels, including overdue tasks and tasks due today.
+- Get a clear empty state with a quick create action when a view has no matching tasks.
 - Save tasks locally between launches.
 
 The first launch starts with a few example tasks so the workspace is ready to explore. You can edit or delete these like any other task.
